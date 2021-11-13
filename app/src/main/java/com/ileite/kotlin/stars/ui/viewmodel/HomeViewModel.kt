@@ -3,19 +3,26 @@ package com.ileite.kotlin.stars.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ileite.kotlin.stars.data.RequestState
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.ileite.kotlin.stars.data.model.GitRepositoryModel
-import com.ileite.kotlin.stars.domain.remote.GetRepositories
+import com.ileite.kotlin.stars.domain.mediator.GetMediatorData
+import com.ileite.kotlin.stars.utils.fromEntityToModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val getRepositories: GetRepositories,
+@ExperimentalPagingApi
+class HomeViewModel
+@Inject constructor(
+    private val getMediatorData: GetMediatorData,
 ) : ViewModel() {
 
-    private val _repositoriesEvent = MutableLiveData<RequestState<List<GitRepositoryModel>>?>()
+    private val _repositoriesEvent = MutableLiveData<PagingData<GitRepositoryModel>>()
     val repositoriesEvent get() = _repositoriesEvent
 
     init {
@@ -24,7 +31,11 @@ class HomeViewModel @Inject constructor(
 
     fun getRepositoriesRemotely() {
         viewModelScope.launch {
-            _repositoriesEvent.value = getRepositories.invoke(GetRepositories.Params(1))
+            getMediatorData.invoke().cachedIn(viewModelScope).collect {
+                _repositoriesEvent.value = it.map { repositoryEntity ->
+                    repositoryEntity.fromEntityToModel()
+                }
+            }
         }
     }
 }

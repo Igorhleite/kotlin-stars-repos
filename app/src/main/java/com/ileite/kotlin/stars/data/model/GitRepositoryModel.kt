@@ -5,11 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GitRepositoryModel(
-    val id: Int,
+    val id: String,
     val name: String,
     val description: String,
-    val stars: Int,
-    val forks: Int,
+    val stars: String,
+    val forks: String,
     val ownerName: String,
     val ownerPhotoUrl: String,
 ) : Parcelable

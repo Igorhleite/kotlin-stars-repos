@@ -11,7 +11,7 @@ import com.ileite.kotlin.stars.data.model.entities.RemoteKeyEntity
     entities = [GitRepositoryEntity::class, RemoteKeyEntity::class],
     version = 1
 )
-abstract class KotlinStarsDatabase: RoomDatabase() {
+abstract class RepositoriesDatabase: RoomDatabase() {
 
     abstract fun repositoriesDao(): RepositoriesDao
 

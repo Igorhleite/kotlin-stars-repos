@@ -16,5 +16,5 @@ interface RemoteKeyDao {
     suspend fun getRemoteKey(id: String): RemoteKeyEntity?
 
     @Query("DELETE FROM remote_keys")
-    suspend fun delAllRemoteKeys()
+    suspend fun deleteAllRemoteKeys()
 }

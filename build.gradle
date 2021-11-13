@@ -15,6 +15,9 @@ buildscript {
 
         // Paging 3
         paging_version = '3.0.1'
+
+        //Coil
+        coil_version = '1.4.0'
     }
     repositories {
         google()

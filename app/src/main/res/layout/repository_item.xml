@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/gray"
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_repository_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_placeholder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_repository_image"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+            <TextView
+                android:id="@+id/tv_repository_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_owner_name"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="RepoName" />
+
+            <TextView
+                android:id="@+id/tv_owner_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_person"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toBottomOf="@id/tv_repository_name"
+                app:layout_constraintStart_toStartOf="@id/tv_repository_name"
+                tools:text="OwnerName" />
+
+            <ImageView
+                android:id="@+id/iv_stars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star"
+                app:layout_constraintTop_toBottomOf="@id/tv_owner_name"
+                app:layout_constraintStart_toStartOf="@id/tv_owner_name"
+                />
+
+            <TextView
+                android:id="@+id/tv_stars_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-light"
+                app:layout_constraintBottom_toBottomOf="@id/iv_stars"
+                app:layout_constraintStart_toEndOf="@id/iv_stars"
+                app:layout_constraintTop_toTopOf="@id/iv_stars"
+                tools:text="4999" />
+
+            <ImageView
+                android:id="@+id/iv_forks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_fork"
+                app:layout_constraintBottom_toBottomOf="@id/iv_stars"
+                app:layout_constraintStart_toEndOf="@id/tv_stars_value"
+                app:layout_constraintTop_toTopOf="@id/iv_stars" />
+
+            <TextView
+                android:id="@+id/tv_forks_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_forks"
+                app:layout_constraintStart_toEndOf="@id/iv_forks"
+                app:layout_constraintTop_toTopOf="@id/iv_forks"
+                tools:text="2000" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

@@ -2,7 +2,7 @@ package com.ileite.kotlin.stars.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ileite.kotlin.stars.data.local.KotlinStarsDatabase
+import com.ileite.kotlin.stars.data.local.RepositoriesDatabase
 import com.ileite.kotlin.stars.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -19,9 +19,9 @@ object RoomModule {
     @Provides
     fun provideUserDataBase(
         @ApplicationContext context: Context,
-    ): KotlinStarsDatabase {
+    ): RepositoriesDatabase {
         return Room.databaseBuilder(
-            context, KotlinStarsDatabase::class.java,
+            context, RepositoriesDatabase::class.java,
             Constants.DATABASE_NAME
         ).fallbackToDestructiveMigration().build()
     }
