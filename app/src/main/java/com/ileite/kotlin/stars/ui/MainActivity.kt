@@ -1,10 +1,11 @@
 package com.ileite.kotlin.stars.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ileite.kotlin.stars.R
+import androidx.appcompat.app.AppCompatActivity
 import com.ileite.kotlin.stars.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
