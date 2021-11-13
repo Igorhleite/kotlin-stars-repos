@@ -18,6 +18,12 @@ buildscript {
 
         //Coil
         coil_version = '1.4.0'
+
+        //Tests
+        espresso_version = '3.3.0'
+        junit_version = '4.13.2'
+        coroutines_test_version = '1.5.0'
+        mockk_version = '1.10.0'
     }
     repositories {
         google()
