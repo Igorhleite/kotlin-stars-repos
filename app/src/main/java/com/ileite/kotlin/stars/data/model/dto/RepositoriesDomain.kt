@@ -1,4 +1,4 @@
-package com.ileite.kotlin.stars.data.model
+package com.ileite.kotlin.stars.data.model.dto
 
 import com.google.gson.annotations.SerializedName
 

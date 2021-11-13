@@ -1,7 +1,7 @@
 package com.ileite.kotlin.stars.utils
 
 import com.ileite.kotlin.stars.data.RequestState
-import com.ileite.kotlin.stars.data.model.ResponseError
+import com.ileite.kotlin.stars.data.model.error.ResponseError
 import retrofit2.Response
 
 

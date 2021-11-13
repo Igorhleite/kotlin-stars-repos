@@ -1,6 +1,6 @@
 package com.ileite.kotlin.stars.data.remote
 
-import com.ileite.kotlin.stars.data.model.GitResponseDomain
+import com.ileite.kotlin.stars.data.model.dto.GitResponseDomain
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

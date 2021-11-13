@@ -1,7 +1,7 @@
 package com.ileite.kotlin.stars.utils
 
 import com.ileite.kotlin.stars.data.model.GitRepositoryModel
-import com.ileite.kotlin.stars.data.model.RepositoriesDomain
+import com.ileite.kotlin.stars.data.model.dto.RepositoriesDomain
 
 fun RepositoriesDomain.fromDomainToModel(): GitRepositoryModel =
     GitRepositoryModel(
