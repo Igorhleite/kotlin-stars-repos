@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt' // Hilt
+    id 'dagger.hilt.android.plugin' // Hilt
 }
 
 android {
@@ -46,4 +49,12 @@ dependencies {
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }
