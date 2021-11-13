@@ -4,5 +4,5 @@ import com.ileite.kotlin.stars.data.RequestState
 import com.ileite.kotlin.stars.data.model.GitRepositoryModel
 
 interface GitRepositoriesRepository {
-    suspend fun getRepositories(page: Int): RequestState<List<GitRepositoryModel>?>
+    suspend fun getRepositories(page: Int): RequestState<List<GitRepositoryModel>>?
 }

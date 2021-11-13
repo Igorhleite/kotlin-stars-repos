@@ -12,10 +12,11 @@ class GitRepositoriesRepositoryImpl
 constructor(
     private val api: RepositoriesService,
 ) : GitRepositoriesRepository {
-    override suspend fun getRepositories(page: Int): RequestState<List<GitRepositoryModel>?> {
+    override suspend fun getRepositories(page: Int): RequestState<List<GitRepositoryModel>>? {
         return when (val response = api.getRepositories(page = page).safeResponse()) {
-            is RequestState.ResponseSuccess -> response.data.let {
-                RequestState.ResponseSuccess(it?.repositories?.fromDomainsToModels())
+            is RequestState.ResponseSuccess -> response.data?.let { gitResponseDomain ->
+                gitResponseDomain.repositories?.let { repositoriesList ->
+                    RequestState.ResponseSuccess(repositoriesList.fromDomainsToModels()) }
             }
             is RequestState.ResponseFailure -> RequestState.ResponseFailure(response.error)
             is RequestState.ResponseException -> RequestState.ResponseException(response.exception)
