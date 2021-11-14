@@ -1,5 +1,6 @@
 package com.ileite.kotlin.stars
 
+import com.ileite.kotlin.stars.data.model.GitRepositoryModel
 import com.ileite.kotlin.stars.data.model.dto.GitResponseDomain
 import com.ileite.kotlin.stars.data.model.dto.OwnerDomain
 import com.ileite.kotlin.stars.data.model.dto.RepositoriesDomain
@@ -9,7 +10,7 @@ import retrofit2.Response
 
 object TestUtils {
 
-    fun getResponseMock() = GitResponseDomain(
+    fun getApiResponseMock() = GitResponseDomain(
         getListDomainMock()
     )
 
@@ -34,5 +35,23 @@ object TestUtils {
 
     fun getResponseError(): Response<GitResponseDomain?>? {
         return Response.error(401, ResponseBody.create(MediaType.get("application/json"), ""))
+    }
+
+    fun getRepositoryResponseMock(): List<GitRepositoryModel> {
+        val modelRepositoryList = mutableListOf<GitRepositoryModel>()
+        for (i in 1..4) {
+            modelRepositoryList.add(
+                GitRepositoryModel(
+                    id = "id$i",
+                    name = "name$i",
+                    description = "description$i",
+                    stars = "stars$i",
+                    forks = "forks$i",
+                    ownerName = "ownerName$i",
+                    ownerPhotoUrl = "ownerPhotoUrl$i"
+                )
+            )
+        }
+        return modelRepositoryList
     }
 }

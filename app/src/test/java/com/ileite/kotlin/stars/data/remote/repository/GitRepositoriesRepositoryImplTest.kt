@@ -1,7 +1,7 @@
 package com.ileite.kotlin.stars.data.remote.repository
 
+import com.ileite.kotlin.stars.TestUtils.getApiResponseMock
 import com.ileite.kotlin.stars.TestUtils.getResponseError
-import com.ileite.kotlin.stars.TestUtils.getResponseMock
 import com.ileite.kotlin.stars.data.RequestState
 import com.ileite.kotlin.stars.data.remote.RepositoriesService
 import com.ileite.kotlin.stars.utils.fromDomainsToModels
@@ -45,9 +45,9 @@ class GitRepositoriesRepositoryTest {
     @Test
     fun `repository should call the service and get a successful response`() = runBlockingTest {
         coEvery { repositoriesService.getRepositories(page = 1) } returns Response.success(
-            getResponseMock())
+            getApiResponseMock())
         val expectedValue =
-            RequestState.ResponseSuccess(getResponseMock().repositories?.fromDomainsToModels())
+            RequestState.ResponseSuccess(getApiResponseMock().repositories?.fromDomainsToModels())
         val actualValue = repository.getRepositories(page = 1)
         assertEquals(expectedValue, actualValue)
     }
