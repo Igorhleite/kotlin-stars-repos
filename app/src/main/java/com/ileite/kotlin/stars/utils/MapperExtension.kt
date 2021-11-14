@@ -4,15 +4,15 @@ import com.ileite.kotlin.stars.data.model.GitRepositoryModel
 import com.ileite.kotlin.stars.data.model.dto.RepositoriesDomain
 import com.ileite.kotlin.stars.data.model.entities.GitRepositoryEntity
 
-fun RepositoriesDomain.fromDomainToModel(): GitRepositoryModel =
+fun RepositoriesDomain?.fromDomainToModel(): GitRepositoryModel =
     GitRepositoryModel(
-        id = this.id.toString() ?: "",
-        name = this.name ?: "",
-        description = this.description ?: "",
-        stars = this.stars.toString() ?: "",
-        forks = this.forks.toString() ?: "",
-        ownerName = this.owner.name ?: "",
-        ownerPhotoUrl = this.owner.img ?: ""
+        id = this?.id.toString() ?: "",
+        name = this?.name ?: "",
+        description = this?.description ?: "",
+        stars = this?.stars.toString() ?: "",
+        forks = this?.forks.toString() ?: "",
+        ownerName = this?.owner?.name ?: "",
+        ownerPhotoUrl = this?.owner?.img ?: ""
     )
 
 fun List<RepositoriesDomain>.fromDomainsToModels(): List<GitRepositoryModel> =

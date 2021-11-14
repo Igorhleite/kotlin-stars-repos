@@ -2,9 +2,12 @@ package com.ileite.kotlin.stars.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ileite.kotlin.stars.R
 import com.ileite.kotlin.stars.databinding.FragmentHomeBinding
@@ -37,6 +40,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.bind(view)
         initRemoteDataObserver()
         initRecycler()
+        setTryAgainButtonAction()
     }
 
     private fun initRecycler() {
@@ -51,6 +55,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initRemoteDataObserver() {
         viewModel.repositoriesEvent.observe(viewLifecycleOwner) {
             repositoriesAdapter.submitData(lifecycle, it)
+            addLoadStateAdapter()
+        }
+    }
+
+    private fun addLoadStateAdapter() {
+        repositoriesAdapter.addLoadStateListener {
+            it.loadStatesRules()
+        }
+    }
+
+    private fun CombinedLoadStates.loadStatesRules() {
+        binding.apply {
+            val isLoading = refresh is LoadState.Loading
+            val isError = refresh is LoadState.Error
+
+            screenError.root.isVisible =
+                (isError) && repositoriesAdapter.itemCount == 0
+            pbProgress.isVisible = isLoading
+        }
+    }
+
+    private fun setTryAgainButtonAction() {
+        binding.screenError.btErrorRefresh.setOnClickListener {
+            viewModel.getRepositoriesRemotely()
         }
     }
 }
