@@ -1,5 +1,7 @@
 package com.ileite.kotlin.stars
 
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.ileite.kotlin.stars.data.model.GitRepositoryModel
 import com.ileite.kotlin.stars.data.model.dto.GitResponseDomain
 import com.ileite.kotlin.stars.data.model.dto.OwnerDomain

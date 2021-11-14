@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.*
 import com.ileite.kotlin.stars.data.local.RepositoriesDatabase
 import com.ileite.kotlin.stars.data.model.GitRepositoryModel
+import com.ileite.kotlin.stars.domain.mediator.GetMediatorData
 import com.ileite.kotlin.stars.domain.remote.GetRepositories
 import com.ileite.kotlin.stars.ui.adapter.paging.mediator.RepositoriesRemoteMediator
 import com.ileite.kotlin.stars.utils.Constants
@@ -19,9 +20,8 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 class HomeViewModel
 @Inject constructor(
-    private val getRepositories: GetRepositories,
-    private val db: RepositoriesDatabase,
-) : ViewModel() {
+    private val getMediatorData: GetMediatorData
+    ) : ViewModel() {
 
     private val _repositoriesEvent = MutableLiveData<PagingData<GitRepositoryModel>>()
     val repositoriesEvent get() = _repositoriesEvent
@@ -32,17 +32,7 @@ class HomeViewModel
 
     fun getRepositoriesRemotely() {
         viewModelScope.launch {
-            Pager(
-                config = PagingConfig(
-                    pageSize = Constants.PAGE_SIZE,
-                    enablePlaceholders = false,
-                ),
-                remoteMediator = RepositoriesRemoteMediator(
-                    getRepositories = getRepositories,
-                    db = db
-                ),
-                pagingSourceFactory = { db.repositoriesDao().getAllRepositories() }
-            ).flow.cachedIn(viewModelScope).collect {
+            getMediatorData.invoke().cachedIn(viewModelScope).collect {
                 _repositoriesEvent.value = it.map { repositoryEntity ->
                     repositoryEntity.fromEntityToModel()
                 }

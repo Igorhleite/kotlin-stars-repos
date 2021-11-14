@@ -75,5 +75,6 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     testImplementation "io.mockk:mockk:$mockk_version"
+    implementation "androidx.arch.core:core-testing:$core_testing_verion"
 
 }
