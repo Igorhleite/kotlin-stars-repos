@@ -2,9 +2,8 @@ package com.ileite.kotlin.stars.data.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
-import com.ileite.kotlin.stars.AndroidTestUtils.getData
-import com.ileite.kotlin.stars.AndroidTestUtils.getEntityMockList
-import com.ileite.kotlin.stars.data.local.dao.RepositoriesDao
+import com.ileite.kotlin.stars.data.local.dao.RemoteKeyDao
+import com.ileite.kotlin.stars.data.model.entities.RemoteKeyEntity
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.Assert.assertEquals
@@ -20,7 +19,7 @@ import javax.inject.Named
 @SmallTest
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class RepositoriesDaoTest {
+class RemoteKeyDaoTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -31,12 +30,12 @@ class RepositoriesDaoTest {
     @Inject
     @Named("test_repositories_db")
     lateinit var database: RepositoriesDatabase
-    private lateinit var dao: RepositoriesDao
+    private lateinit var dao: RemoteKeyDao
 
     @Before
     fun setup() {
         hiltRule.inject()
-        dao = database.repositoriesDao()
+        dao = database.remoteKeyDao()
     }
 
     @After
@@ -46,22 +45,23 @@ class RepositoriesDaoTest {
 
     @Test
     fun insertOnDataBase() = runBlockingTest {
-        dao.setAllRepositories(getEntityMockList())
+        dao.setAllRemoteKeys(listOf(RemoteKeyEntity("1", null, 2)))
     }
 
     @Test
-    fun getListOnDataBase() = runBlockingTest {
-        val list = getEntityMockList()
-        dao.setAllRepositories(list)
-        val actualValue = dao.getAllRepositories().getData()
-        assertEquals(list[0].id, actualValue[0].id)
+    fun getKeyEntityOnDataBase() = runBlockingTest {
+        val keyEntity = RemoteKeyEntity("1", null, 2)
+        dao.setAllRemoteKeys(listOf(keyEntity))
+        val actualValue = dao.getRemoteKey("1")
+        assertEquals(keyEntity.repositoriesId, actualValue?.repositoriesId)
     }
 
     @Test
-    fun insertAndDeleteListOnDataBase() = runBlockingTest {
-        dao.setAllRepositories(getEntityMockList())
-        dao.deleteAllRepositories()
-        val actualValue = dao.getAllRepositories().getData()
-        assert(actualValue.isEmpty())
+    fun insertAndDeleteKeyEntityOnDataBase() = runBlockingTest {
+        val keyEntity = RemoteKeyEntity("1", null, 2)
+        dao.setAllRemoteKeys(listOf(keyEntity))
+        dao.deleteAllRemoteKeys()
+        val actualValue = dao.getRemoteKey("1")
+        assert(actualValue == null)
     }
 }
