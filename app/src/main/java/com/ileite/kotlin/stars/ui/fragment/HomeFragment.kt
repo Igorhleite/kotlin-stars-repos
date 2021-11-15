@@ -1,5 +1,7 @@
 package com.ileite.kotlin.stars.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -15,6 +17,7 @@ import com.ileite.kotlin.stars.ui.adapter.RemoteRepositoriesAdapter
 import com.ileite.kotlin.stars.ui.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @ExperimentalPagingApi
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -26,7 +29,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     val repositoriesAdapter by lazy {
         RemoteRepositoriesAdapter { repository, _ ->
-
+            setOpenRepoUrlInBrowser(repoUrl = repository.repoUrl)
         }
     }
 
@@ -80,5 +83,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.screenError.btErrorRefresh.setOnClickListener {
             viewModel.getRepositoriesRemotely()
         }
+    }
+
+    private fun setOpenRepoUrlInBrowser(repoUrl: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(repoUrl)))
     }
 }

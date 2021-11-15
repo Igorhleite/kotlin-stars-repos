@@ -43,11 +43,12 @@ class RemoteRepositoriesAdapter(
         val biding = RepositoryItemBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return ViewHolder(biding)
+        return ViewHolder(biding, onClickListener)
     }
 
     inner class ViewHolder(
         private val binding: RepositoryItemBinding,
+        private val onClickListener: (repository: GitRepositoryModel, position: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun initView(repository: GitRepositoryModel) {
@@ -61,6 +62,9 @@ class RemoteRepositoriesAdapter(
                     placeholder(R.drawable.ic_placeholder)
                     error(R.drawable.ic_placeholder)
                     transformations(CircleCropTransformation())
+                }
+                root.setOnClickListener {
+                    onClickListener(repository, layoutPosition)
                 }
             }
         }

@@ -7,8 +7,8 @@ data class RepositoriesDomain(
     val id: Int?,
     @SerializedName("name")
     val name: String?,
-    @SerializedName("description")
-    val description: String?,
+    @SerializedName("html_url")
+    val repoUrl: String?,
     @SerializedName("stargazers_count")
     val stars: Int?,
     @SerializedName("forks_count")

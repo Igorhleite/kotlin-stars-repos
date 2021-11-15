@@ -1,7 +1,5 @@
 package com.ileite.kotlin.stars
 
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
 import com.ileite.kotlin.stars.data.model.GitRepositoryModel
 import com.ileite.kotlin.stars.data.model.dto.GitResponseDomain
 import com.ileite.kotlin.stars.data.model.dto.OwnerDomain
@@ -23,7 +21,7 @@ object TestUtils {
                 RepositoriesDomain(
                     id = i,
                     name = "repository$i",
-                    description = "description$i",
+                    repoUrl = "repoUrl$i",
                     stars = i,
                     forks = i,
                     owner = OwnerDomain(
@@ -46,7 +44,7 @@ object TestUtils {
                 GitRepositoryModel(
                     id = "id$i",
                     name = "name$i",
-                    description = "description$i",
+                    repoUrl = "repoUrl$i",
                     stars = "stars$i",
                     forks = "forks$i",
                     ownerName = "ownerName$i",
