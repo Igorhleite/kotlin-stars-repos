@@ -9,9 +9,9 @@ import java.util.concurrent.CountDownLatch
 
 object AndroidTestUtils {
 
-    fun getEntityMockList(): List<GitRepositoryEntity> {
+    fun getEntityMockList(size: Int): List<GitRepositoryEntity> {
         val repoList = mutableListOf<GitRepositoryEntity>()
-        for (i in 1..4) {
+        for (i in 1..size) {
             repoList.add(
                 GitRepositoryEntity(
                     id = "id$i",

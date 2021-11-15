@@ -46,12 +46,12 @@ class RepositoriesDaoTest {
 
     @Test
     fun insertOnDataBase() = runBlockingTest {
-        dao.setAllRepositories(getEntityMockList())
+        dao.setAllRepositories(getEntityMockList(4))
     }
 
     @Test
     fun getListOnDataBase() = runBlockingTest {
-        val list = getEntityMockList()
+        val list = getEntityMockList(4)
         dao.setAllRepositories(list)
         val actualValue = dao.getAllRepositories().getData()
         assertEquals(list[0].id, actualValue[0].id)
@@ -59,7 +59,7 @@ class RepositoriesDaoTest {
 
     @Test
     fun insertAndDeleteListOnDataBase() = runBlockingTest {
-        dao.setAllRepositories(getEntityMockList())
+        dao.setAllRepositories(getEntityMockList(4))
         dao.deleteAllRepositories()
         val actualValue = dao.getAllRepositories().getData()
         assert(actualValue.isEmpty())
