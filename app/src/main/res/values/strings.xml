@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_message">The list is empty.\nTry again later</string>
     <string name="try_again">Try again</string>
+    <string name="first_app_name">GIT</string>
+    <string name="second_app_name">STARS</string>
 </resources>
