@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class GitRepositoryModel(
     val id: String,
     val name: String,
-    val description: String,
+    val repoUrl: String,
     val stars: String,
     val forks: String,
     val ownerName: String,

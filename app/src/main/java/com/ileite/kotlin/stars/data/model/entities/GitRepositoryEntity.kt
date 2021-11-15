@@ -11,8 +11,8 @@ class GitRepositoryEntity(
     val id: String,
     @ColumnInfo(name = "name")
     val name: String,
-    @ColumnInfo(name = "description")
-    val description: String,
+    @ColumnInfo(name = "repoUrl")
+    val repoUrl: String,
     @ColumnInfo(name = "stars")
     val stars: String,
     @ColumnInfo(name = "forks")
