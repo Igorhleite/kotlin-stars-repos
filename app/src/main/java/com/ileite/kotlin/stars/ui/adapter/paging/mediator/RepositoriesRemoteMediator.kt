@@ -15,15 +15,32 @@ import com.ileite.kotlin.stars.utils.Constants
 import com.ileite.kotlin.stars.utils.fromModelsToEntities
 
 @ExperimentalPagingApi
+/**
+ * By IgorHLeite on 13/11/2021
+ *
+ * This class provides the implementation of Remote Mediator, a feature of Paging 3.
+ *
+ * @getRepositories this variable provides access to UseCase that get remote data.
+ * @db this variable provides access to the local database
+ */
 class RepositoriesRemoteMediator(
     private val getRepositories: GetRepositories,
     private val db: RepositoriesDatabase,
 ) : RemoteMediator<Int, GitRepositoryEntity>() {
 
+    /**
+     * This function runs to completion before any loads are performed.
+     */
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
     }
 
+    /**
+     * Callback triggered when Paging needs to request more data from a remote source, your responsibility is to make the remote call and save the data locally.
+     *
+     * @loadType this variable provides LoadType of the condition that triggered this callback (PREPEND,APPEND,REFRESH).
+     * @state this variable provides a copy of the state including a list of pages currently held in PagingData's memory.
+     */
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, GitRepositoryEntity>,
@@ -54,7 +71,8 @@ class RepositoriesRemoteMediator(
                 val keys = repositories.map {
                     RemoteKeyEntity(it.id, prevKey = prevKey, nextKey = nextKey)
                 }
-                db.repositoriesDao().setAllRepositories(repositories = repositories.fromModelsToEntities())
+                db.repositoriesDao()
+                    .setAllRepositories(repositories = repositories.fromModelsToEntities())
                 db.remoteKeyDao().setAllRemoteKeys(keys)
             }
             return MediatorResult.Success(endOfPaginationReached = isEndOfList)
@@ -69,17 +87,27 @@ class RepositoriesRemoteMediator(
         state: PagingState<Int, GitRepositoryEntity>,
     ): Any {
         return when (loadType) {
+            /**
+             * REFRESH indicates that an update was requested.
+             * This usually means that a request to load remote data and replace all local data has been made.
+             */
             LoadType.REFRESH -> {
                 val remoteKeys = getClosestRemoteKey(state)
                 remoteKeys?.nextKey?.minus(1) ?: Constants.PAGE_INDEX
             }
-
+            /**
+             * Indicates the end of paging in the APPEND (next page) direction has been reached.
+             * This occurs when PagingSource.load returns a LoadResult.Page with LoadResult.Page.nextKey == null.
+             */
             LoadType.APPEND -> {
                 val remoteKeys = getLastRemoteKey(state)
                 val nextKey = remoteKeys?.nextKey
                 return nextKey ?: MediatorResult.Success(endOfPaginationReached = false)
             }
-
+            /**
+             * Indicates that the end of paging in the PREPEND (prev page) direction has been reached.
+             * This occurs when PagingSource.load returns a LoadResult.Page with LoadResult.Page.prevKey == null.
+             */
             LoadType.PREPEND -> {
                 val remoteKeys = getFirstRemoteKey(state)
                 return remoteKeys?.prevKey ?: return MediatorResult.Success(
@@ -89,7 +117,9 @@ class RepositoriesRemoteMediator(
         }
     }
 
-    // get the closest remote key inserted which had the data
+    /**
+     * Get the closest remote key inserted which had the data.
+     */
     private suspend fun getClosestRemoteKey(state: PagingState<Int, GitRepositoryEntity>): RemoteKeyEntity? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
@@ -98,7 +128,9 @@ class RepositoriesRemoteMediator(
         }
     }
 
-    // get the last remote key inserted which had the data
+    /**
+     * Get the last remote key inserted which had the data.
+     */
     private suspend fun getLastRemoteKey(state: PagingState<Int, GitRepositoryEntity>): RemoteKeyEntity? {
         return state.pages
             .lastOrNull { it.data.isNotEmpty() }
@@ -106,7 +138,9 @@ class RepositoriesRemoteMediator(
             ?.let { user -> db.remoteKeyDao().getRemoteKey(user.id) }
     }
 
-    // get the first remote key inserted which had the data
+    /**
+     * Get the first remote key inserted which had the data.
+     */
     private suspend fun getFirstRemoteKey(state: PagingState<Int, GitRepositoryEntity>): RemoteKeyEntity? {
         return state.pages
             .firstOrNull { it.data.isNotEmpty() }

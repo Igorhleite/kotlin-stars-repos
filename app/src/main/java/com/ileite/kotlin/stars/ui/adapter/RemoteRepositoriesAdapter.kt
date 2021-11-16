@@ -2,6 +2,7 @@ package com.ileite.kotlin.stars.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -53,10 +54,10 @@ class RemoteRepositoriesAdapter(
 
         fun initView(repository: GitRepositoryModel) {
             binding.apply {
-                tvOwnerName.text = repository.ownerName
-                tvRepositoryName.text = repository.name
-                tvStarsValue.text = repository.stars
-                tvForksValue.text = repository.forks
+                tvOwnerName.setSafeText(repository.ownerName)
+                tvRepositoryName.setSafeText(repository.name)
+                tvStarsValue.setSafeText(repository.stars)
+                tvForksValue.setSafeText(repository.forks)
                 ivRepositoryImage.load(repository.ownerPhotoUrl) {
                     crossfade(true)
                     placeholder(R.drawable.ic_placeholder)
@@ -66,6 +67,14 @@ class RemoteRepositoriesAdapter(
                 root.setOnClickListener {
                     onClickListener(repository, layoutPosition)
                 }
+            }
+        }
+
+        private fun TextView.setSafeText(currentText: String) {
+            text = if (currentText.trim().isEmpty()) {
+                binding.root.context.getString(R.string.not_available)
+            } else {
+                currentText
             }
         }
     }
