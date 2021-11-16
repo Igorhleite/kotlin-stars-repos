@@ -1,3 +1,7 @@
+#### Description:
+
+This simple app provides a search in the GitHub api and lists the most starred repositories in the Kotlin language, it has infinite listing, but the api provides a limit of 10 requests per minute (60 requests per hour), use sparingly.
+
 #### Resources:
 
 * [Coil - Image Loader](https://coil-kt.github.io/coil/getting_started/)
