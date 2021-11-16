@@ -17,6 +17,7 @@ import androidx.test.filters.SmallTest
 import com.ileite.kotlin.stars.AndroidTestUtils.getEntityMockList
 import com.ileite.kotlin.stars.R
 import com.ileite.kotlin.stars.launchFragmentInHiltContainer
+import com.ileite.kotlin.stars.ui.adapter.RemoteRepositoriesAdapter
 import com.ileite.kotlin.stars.utils.fromEntitiesToModels
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -84,7 +85,7 @@ class HomeFragmentTest {
         initAdapter()
         Espresso.onView(withId(R.id.rc_repositories))
             .perform(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
+                RecyclerViewActions.scrollToPosition<RemoteRepositoriesAdapter.ViewHolder>(
                     50
                 )
             )
