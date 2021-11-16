@@ -1,4 +1,4 @@
-# Resources:
+#### Resources:
 
 * [Coil - Image Loader](https://coil-kt.github.io/coil/getting_started/)
 * [Navigation](https://developer.android.com/guide/navigation/navigation-getting-started)
